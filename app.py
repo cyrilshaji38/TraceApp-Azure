@@ -1,8 +1,9 @@
-# from azure.storage.queue import (
-#         QueueService,
-#         QueueMessageFormat
-# )
-# import os, uuid
+from azure.storage.queue import (
+        QueueClient,
+        BinaryBase64EncodePolicy,
+        BinaryBase64DecodePolicy
+)
+import os, uuid
 
 from flask import Flask, render_template
 app = Flask(__name__)
