@@ -4,7 +4,7 @@ app = Flask(__name__)
 connect_str = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
 @app.route("/")
 def home_page(): 
-        return connect_str
+        return "connect_str"
         # render_template('home.html') 
 
 # from azure.storage.queue import QueueClient
