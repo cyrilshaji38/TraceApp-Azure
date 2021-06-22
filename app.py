@@ -9,8 +9,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return '<h1>Welcome to the Trace App! We will help you sort out your product reviews.</h1><br><br><label for="fname">Write a review: </label><input type="text" id="fname" name="fname"><br><br><input type="submit" value="Check Sentiment">'
-      
+#     return '<h1>Welcome to the Trace App! We will help you sort out your product reviews.</h1><br><br><label for="fname">Write a review: </label><input type="text" id="fname" name="fname"><br><br><input type="submit" value="Check Sentiment">'
+    return "hello"  
   
   
 
