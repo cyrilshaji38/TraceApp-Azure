@@ -4,15 +4,12 @@
 # )
 # import os, uuid
 
-from flask import Flask
+from flask import Flask, render_template
 app = Flask(__name__)
 
 @app.route("/")
-def hello():
-        # return "hello"
-
-
-    return '<h1>Welcome to the Trace App! We will help you sort out your product reviews.</h1><br><br><label for="fname">Write a review: </label><input type="text" id="fname" name="fname"><br><br><input type="submit" value="Check Sentiment">'
+def home_page(): 
+        return render_template('home.html') 
       
   
   
