@@ -3,6 +3,7 @@ from azure.storage.queue import (
         BinaryBase64EncodePolicy,
         BinaryBase64DecodePolicy
 )
+
 import os, uuid
 
 from flask import Flask, render_template
