@@ -22,11 +22,11 @@ class ReviewForm(FlaskForm):
     
 
 class ReviewQueue(object):
-        def add_to_queue():
+        def add_to_queue(self):
                 service = QueueServiceClient.from_connection_string(conn_str=connect_str)
                 reviewqueue = service.get_queue_client(queue="new-feedback-q")
                 r1 = ReviewForm()
-                reviewqueue.send_message(r1.review)
+                reviewqueue.send_message(r1.review.data)
 
 
 if __name__ == '__main__':
