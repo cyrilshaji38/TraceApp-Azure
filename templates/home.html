@@ -2,10 +2,14 @@
     <body>
         <h1>Welcome to the Trace App! We will help you sort out your product reviews.</h1>
         <br>
-        <label for="review">Write a review: </label>
-        <input type="text" id="review" name="review">
-        <br>
-        <br>
-        <input type="submit" value="Check Sentiment">
+        <form method="POST", action="">
+            <br>
+            {{ form.hidden_tag() }}
+            {{ form.review.label() }}
+            {{ form.review(class="form-control") }}
+            <br>
+            <br>
+            {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+        </form>
     </body> 
 </html>
