@@ -3,11 +3,11 @@ from azure.storage.queue import (
         QueueClient,
         TextBase64EncodePolicy
 )
-import base64
+import os
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 
-connect_str = "DefaultEndpointsProtocol=https;AccountName=storageaccounttrace8774;AccountKey=TApeXC/1SCYVXPYZRywFqleViIkAGMpWV1G51D1cVTyjJutNcgjlDSCSW2MzBW6guPS6FUtzD4Y7Yo9c37WZ2w==;EndpointSuffix=core.windows.net"
+connect_str = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '7b040a256ba53639fe34e81ccba6bb41'
