@@ -1,5 +1,9 @@
 from flask import Flask, render_template
-from azure.storage.queue import QueueServiceClient
+from azure.storage.queue import (
+        QueueClient,
+        TextBase64EncodePolicy
+)
+import base64
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 
@@ -23,8 +27,11 @@ class ReviewForm(FlaskForm):
 
 class ReviewQueue(object):
         def add_to_queue(self):
-                service = QueueServiceClient.from_connection_string(conn_str=connect_str)
-                reviewqueue = service.get_queue_client(queue="new-feedback-q")
+                reviewqueue = QueueClient.from_connection_string(
+                        conn_str=connect_str, 
+                        queue_name = "new-feedback-q", 
+                        message_encode_policy = TextBase64EncodePolicy()
+                )
                 r1 = ReviewForm()
                 reviewqueue.send_message(r1.review.data)
 

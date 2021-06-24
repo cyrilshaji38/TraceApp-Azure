@@ -3,10 +3,10 @@
         <h1>Welcome to the Trace App! We will help you sort out your product reviews.</h1>
         <br>
         <form method="POST", action="">
-            <br>
             {{ form.hidden_tag() }}
             {{ form.review.label() }}
-            {{ form.review(class="form-control") }}
+            <br>
+            {{ form.review(class="form-control",size="225") }}
             <br>
             <br>
             {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
