@@ -2,3 +2,7 @@ Flask>=1.0,<=1.1.2
 azure-core==1.15.0
 azure-storage-queue==12.1.6
 Flask-WTF==0.15.1
+azure-ai-textanalytics==5.1.0b7
+pandas==1.2.5
+bs4==0.0.1
+requests==2.25.1
