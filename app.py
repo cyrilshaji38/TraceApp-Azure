@@ -4,6 +4,7 @@ from azure.core.credentials import AzureKeyCredential
 import os
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
+# from amazon-reviews import get_review
 
 subscription_key = os.environ["TEXT_ANALYTICS_SUBSCRIPTION_KEY"]
 endpoint = os.environ["TEXT_ANALYTICS_ENDPOINT"]

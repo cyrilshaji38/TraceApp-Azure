@@ -1,12 +1,7 @@
-import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-
 def get_review(pages):
-
-    
-
 
     headers = {
         'authority': 'www.amazon.com',
@@ -28,20 +23,11 @@ def get_review(pages):
     }
 
     resp = requests.get(pages[0], headers=headers)
-    resp
 
     soup = BeautifulSoup(resp.text, "html.parser") # html.parser, lxml
 
     # 10 divs
     reviews = soup.find_all("div", {"class": "a-section review aok-relative"})
-
-    def get_review_stars(soup_obj: BeautifulSoup) -> str:
-        try:
-            review_str = soup_obj.find('a', {"class": "a-link-normal"}).get_text()
-            return review_str
-        except Exception as e:
-            return 'no_stars'
-            print(e)
 
     def get_review_body(soup_obj: BeautifulSoup) -> str:
         try:
@@ -54,13 +40,11 @@ def get_review(pages):
             print(e)
 
     records = [get_review_body(rev) for rev in reviews]
-    return records
+    return records[1:]
 
 
 pages = [
         "https://www.amazon.com/Heat-Storm-HS-1500-PHX-WIFI-Infrared-Heater/product-reviews/B07JXRWJ8D/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews",
-        "https://www.amazon.com/Heat-Storm-HS-1500-PHX-WIFI-Infrared-Heater/product-reviews/B07JXRWJ8D/ref=cm_cr_arp_d_paging_btm_next_2?ie=UTF8&reviewerType=all_reviews&pageNumber=2",
-        "https://www.amazon.com/Heat-Storm-HS-1500-PHX-WIFI-Infrared-Heater/product-reviews/B07JXRWJ8D/ref=cm_cr_getr_d_paging_btm_next_3?ie=UTF8&reviewerType=all_reviews&pageNumber=3"
     ]
 
 print(get_review(pages))
