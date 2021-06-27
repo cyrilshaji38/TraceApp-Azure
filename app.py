@@ -51,8 +51,9 @@ def home_page():
     form=ReviewForm()
     r2.review_string = ""
     if form.validate_on_submit():
-        for i in form.review.data:        
-            ending=i[-11:]
+        l=len(form.review.data)
+        ending=form.review.data[l-11:]
+        print(ending)
         if ending !='all_reviews':
             return redirect(url_for('error_page'))
         else:
