@@ -1,7 +1,6 @@
 from flask import Flask, render_template, redirect, url_for
 from azure.ai.textanalytics import TextAnalyticsClient
 from azure.core.credentials import AzureKeyCredential
-# import os
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 import amazon
@@ -41,22 +40,6 @@ def sentiment_analysis_example(client):
         r2.sentimental_analysis = "negative"
     print("Document Sentiment: {}".format(r2.sentimental_analysis))
 
-def key_phrase_extraction_example(client):
-    r2.key_phrases = []
-    try:
-        documents = form.all_reviews
-        response = client.extract_key_phrases(documents = documents)[0]
-        if not response.is_error:
-            print("\tKey Phrases:")
-            for phrase in response.key_phrases:
-                r2.key_phrases.append(phrase)
-                print("\t\t", phrase)
-        else:
-            print(response.id, response.error)
-
-    except Exception as err:
-        print("Encountered exception. {}".format(err))
-
 
 app = Flask(__name__)
 
@@ -68,22 +51,30 @@ def home_page():
     form=ReviewForm()
     r2.review_string = ""
     if form.validate_on_submit():
-        form.all_reviews = amazon.get_review(form.review.data)
-        for i in form.all_reviews:
-            r2.review_string=r2.review_string+i+" "
-        # print(r2.review_string)    
-        sentiment_analysis_example(client)
-        # key_phrase_extraction_example(client)
-        r2.summary_text = summary.create_summary(r2.review_string)
-        r2.user_review = form.all_reviews
-        print(r2.summary_text)
-        return redirect(url_for('result_page'))
+        for i in form.review.data:        
+            ending=i[-11:]
+        if ending !='all_reviews':
+            return redirect(url_for('error_page'))
+        else:
+            form.all_reviews = amazon.get_review(form.review.data)
+            for i in form.all_reviews:
+                r2.review_string=r2.review_string+i+" "
+            # print(r2.review_string)    
+            sentiment_analysis_example(client)
+            # key_phrase_extraction_example(client)
+            r2.summary_text = summary.create_summary(r2.review_string)
+            r2.user_review = form.all_reviews
+            print(r2.summary_text)
+            return redirect(url_for('result_page'))
     return render_template('home.html', form=form)
 
 @app.route("/results")
 def result_page():
     return render_template('results.html', d1 = r2.review_string, d2 = r2.sentimental_analysis, d3 = r2.summary_text)
 
+@app.route("/error")
+def error_page():
+    return render_template('error.html')
 
 class ReviewForm(FlaskForm):
     review = StringField(label='Enter an Amazon product link: ')
