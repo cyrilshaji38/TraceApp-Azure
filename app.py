@@ -1,14 +1,14 @@
 from flask import Flask, render_template, redirect, url_for
 from azure.ai.textanalytics import TextAnalyticsClient
 from azure.core.credentials import AzureKeyCredential
-import os
+# import os
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 import amazon
 import summary
 
-subscription_key = os.environ["TEXT_ANALYTICS_SUBSCRIPTION_KEY"]
-endpoint = os.environ["TEXT_ANALYTICS_ENDPOINT"]
+subscription_key = "4e6fc5014582468ea54de7d20dae4ad6"
+endpoint = "https://trace-textanalysis.cognitiveservices.azure.com/"
 
 def authenticate_client():
     ta_credential = AzureKeyCredential(subscription_key)

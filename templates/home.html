@@ -1,7 +1,8 @@
 <html>
-    <body>
-        <h1>Welcome to the Trace App! We will help you sort out your product reviews.</h1>
-        <h2>Do the following to find the overall sentiment of the customer reviews of an Amazon product: </h2>
+    <body style="background-color:rgb(27, 29, 29);">
+        <h1 style="color:#83e0aa;font-family:Verdana;">Welcome to the Trace App! We will help you sort out your product reviews.</h1>
+        <h2 style="color:#83e0aa;font-family:Verdana;">Do the following to find the overall sentiment of the customer reviews of an Amazon product: </h2>
+        <p style="color:#83e0aa;font-family:Verdana;">
         Step 1: Find a product on Amazon.
         <br>
         <br>
@@ -15,13 +16,11 @@
         <br>
         <br>
         Step 4: Copy the link of that page and paste it below.
-        <br>
+        </p>
         <br>
         <form method="POST", action="">
             {{ form.hidden_tag() }}
-            <b>{{ form.review.label() }}</b>
-            <br>
-            <br>
+            <b><p style="color:#83e0aa;">{{ form.review.label() }}</p></b>
             {{ form.review(class="form-control",size="225") }}
             <br>
             <br>
