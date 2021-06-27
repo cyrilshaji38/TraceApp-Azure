@@ -5,6 +5,7 @@ import os
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 import amazon
+import summary
 
 subscription_key = os.environ["TEXT_ANALYTICS_SUBSCRIPTION_KEY"]
 endpoint = os.environ["TEXT_ANALYTICS_ENDPOINT"]
@@ -25,7 +26,6 @@ def sentiment_analysis_example(client):
     review_list = form.all_reviews
     for x in review_list:
         documents = [x]
-        print(documents)
         response = client.analyze_sentiment(documents=documents)[0]
         pos = response.confidence_scores.positive
         neg = response.confidence_scores.negative
@@ -66,17 +66,23 @@ app.config['SECRET_KEY'] = '7b040a256ba53639fe34e81ccba6bb41'
 def home_page():
     global form
     form=ReviewForm()
+    r2.review_string = ""
     if form.validate_on_submit():
         form.all_reviews = amazon.get_review(form.review.data)
+        for i in form.all_reviews:
+            r2.review_string=r2.review_string+i+" "
+        # print(r2.review_string)    
         sentiment_analysis_example(client)
-        key_phrase_extraction_example(client)
+        # key_phrase_extraction_example(client)
+        r2.summary_text = summary.create_summary(r2.review_string)
         r2.user_review = form.all_reviews
+        print(r2.summary_text)
         return redirect(url_for('result_page'))
     return render_template('home.html', form=form)
 
 @app.route("/results")
 def result_page():
-    return render_template('results.html', d1 = r2.user_review, d2 = r2.sentimental_analysis, d3 = r2.key_phrases)
+    return render_template('results.html', d1 = r2.review_string, d2 = r2.sentimental_analysis, d3 = r2.summary_text)
 
 
 class ReviewForm(FlaskForm):
@@ -86,9 +92,10 @@ class ReviewForm(FlaskForm):
 
 
 class Results():
-    user_review = ""
+    review_string = ""
     sentimental_analysis = "" 
     key_phrases = []
+    summary_text = ""
     
 r2 = Results()
 
