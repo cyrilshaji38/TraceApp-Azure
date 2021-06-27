@@ -40,4 +40,4 @@ def get_review(pages):
             print(e)
 
     records = [get_review_body(rev) for rev in reviews]
-    return str(records[1:])
+    return records[1:]

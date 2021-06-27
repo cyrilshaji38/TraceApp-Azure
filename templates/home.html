@@ -1,14 +1,28 @@
 <html>
     <body>
         <h1>Welcome to the Trace App! We will help you sort out your product reviews.</h1>
+        <h2>Do the following to find the overall sentiment of the customer reviews of an Amazon product: </h2>
+        Step 1: Find a product on Amazon.
+        <br>
+        <br>
+        Step 2: Scroll down to the bottom of the products page.
+        <br>
+        <br>
+        Step 3: Click on "See all reviews".
+        <br>
+        <br>
+        <img src="https://docs.google.com/uc?id=1WEhmZwtMrvfIZgbxdIvAN6OtbRz5V2lz" alt="instructions-image" width="900" height="500">
+        <br>
+        <br>
+        Step 4: Copy the link of that page and paste it below.
+        <br>
         <br>
         <form method="POST", action="">
             {{ form.hidden_tag() }}
-            {{ form.review.label() }}
+            <b>{{ form.review.label() }}</b>
             <br>
             <br>
             {{ form.review(class="form-control",size="225") }}
-            <br>
             <br>
             <br>
             {{ form.submit(class="btn btn-lg btn-block btn-primary") }}

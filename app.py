@@ -19,17 +19,32 @@ def authenticate_client():
 client = authenticate_client()
 
 def sentiment_analysis_example(client):
-    # r1 = ReviewForm()
-    documents = [form.all_reviews]
-    response = client.analyze_sentiment(documents=documents)[0]
-    r2.sentimental_analysis = response.sentiment
-    print("Document Sentiment: {}".format(response.sentiment))
+    r2.sentimental_analysis = ""
+    p=0
+    n=0
+    review_list = form.all_reviews
+    for x in review_list:
+        documents = [x]
+        print(documents)
+        response = client.analyze_sentiment(documents=documents)[0]
+        pos = response.confidence_scores.positive
+        neg = response.confidence_scores.negative
+        if(pos>neg):
+            p=p+1
+        else:
+            n=n+1
+    if(p>n):
+        r2.sentimental_analysis = "positive"
+    elif(p==0 and n==0):
+        r2.sentimental_analysis = "neutral" 
+    else:
+        r2.sentimental_analysis = "negative"
+    print("Document Sentiment: {}".format(r2.sentimental_analysis))
 
 def key_phrase_extraction_example(client):
-    # r1 = ReviewForm()
-     
+    r2.key_phrases = []
     try:
-        documents = [form.all_reviews]
+        documents = form.all_reviews
         response = client.extract_key_phrases(documents = documents)[0]
         if not response.is_error:
             print("\tKey Phrases:")
@@ -65,9 +80,9 @@ def result_page():
 
 
 class ReviewForm(FlaskForm):
-    review = StringField(label='Write a review: ')
+    review = StringField(label='Enter an Amazon product link: ')
     submit = SubmitField(label='Check Sentiment')
-    all_reviews = ""   
+    all_reviews = []   
 
 
 class Results():
