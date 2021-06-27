@@ -4,7 +4,7 @@ from azure.core.credentials import AzureKeyCredential
 import os
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
-# from amazon-reviews import get_review
+import amazon
 
 subscription_key = os.environ["TEXT_ANALYTICS_SUBSCRIPTION_KEY"]
 endpoint = os.environ["TEXT_ANALYTICS_ENDPOINT"]
@@ -19,17 +19,17 @@ def authenticate_client():
 client = authenticate_client()
 
 def sentiment_analysis_example(client):
-    r1 = ReviewForm()
-    documents = [r1.review.data]
+    # r1 = ReviewForm()
+    documents = [form.all_reviews]
     response = client.analyze_sentiment(documents=documents)[0]
     r2.sentimental_analysis = response.sentiment
     print("Document Sentiment: {}".format(response.sentiment))
 
 def key_phrase_extraction_example(client):
-    r1 = ReviewForm()
+    # r1 = ReviewForm()
      
     try:
-        documents = [r1.review.data]
+        documents = [form.all_reviews]
         response = client.extract_key_phrases(documents = documents)[0]
         if not response.is_error:
             print("\tKey Phrases:")
@@ -49,11 +49,13 @@ app.config['SECRET_KEY'] = '7b040a256ba53639fe34e81ccba6bb41'
 
 @app.route("/", methods = ['GET','POST'])
 def home_page():
-    form = ReviewForm()
+    global form
+    form=ReviewForm()
     if form.validate_on_submit():
+        form.all_reviews = amazon.get_review(form.review.data)
         sentiment_analysis_example(client)
         key_phrase_extraction_example(client)
-        r2.user_review = form.review.data
+        r2.user_review = form.all_reviews
         return redirect(url_for('result_page'))
     return render_template('home.html', form=form)
 
@@ -64,7 +66,9 @@ def result_page():
 
 class ReviewForm(FlaskForm):
     review = StringField(label='Write a review: ')
-    submit = SubmitField(label='Check Sentiment')   
+    submit = SubmitField(label='Check Sentiment')
+    all_reviews = ""   
+
 
 class Results():
     user_review = ""

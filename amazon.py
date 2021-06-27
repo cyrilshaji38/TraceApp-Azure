@@ -22,7 +22,7 @@ def get_review(pages):
         'cookie': 'session-id=140-4142375-4005405; i18n-prefs=USD; sp-cdn=^\\^L5Z9:IN^\\^; ubid-main=133-1703036-0414721; s_fid=15ACC4BA280D4F14-038C9A8E5E877985; regStatus=pre-register; aws-target-data=^%^7B^%^22support^%^22^%^3A^%^221^%^22^%^7D; aws-target-visitor-id=1623992980699-29478.31_0; lc-main=en_US; session-id-time=2082787201l; session-token=3C7FE5erzwisM4Q9VFUHzXSA/eMeK109XvSk3qGH0QACt4108/s0lKTOpDVQTEBs90M2tWq4niv7M6Qb/uP3k9iBEKg1xKTsaibq9ACUJiyvDiduYSi6Lo1A5rR3BFtb0hKq5YaiuVdgb0SctM4i6hzPr5w4P3scMT7tePHGZFUKSnw7eYAlsAD5i14Zhu7U; csm-hit=adb:adblk_no&t:1624715411612&tb:3Z2570B9GG7KJPY3JW0K+s-3Z2570B9GG7KJPY3JW0K^|1624715411612',
     }
 
-    resp = requests.get(pages[0], headers=headers)
+    resp = requests.get(pages, headers=headers)
 
     soup = BeautifulSoup(resp.text, "html.parser") # html.parser, lxml
 
@@ -40,11 +40,4 @@ def get_review(pages):
             print(e)
 
     records = [get_review_body(rev) for rev in reviews]
-    return records[1:]
-
-
-pages = [
-        "https://www.amazon.com/Heat-Storm-HS-1500-PHX-WIFI-Infrared-Heater/product-reviews/B07JXRWJ8D/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews",
-    ]
-
-print(get_review(pages))
+    return str(records[1:])
