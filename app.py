@@ -53,16 +53,13 @@ def home_page():
     if form.validate_on_submit():
         l=len(form.review.data)
         ending=form.review.data[l-11:]
-        print(ending)
         if ending !='all_reviews':
             return redirect(url_for('error_page'))
         else:
             form.all_reviews = amazon.get_review(form.review.data)
             for i in form.all_reviews:
                 r2.review_string=r2.review_string+i+" "
-            # print(r2.review_string)    
             sentiment_analysis_example(client)
-            # key_phrase_extraction_example(client)
             r2.summary_text = summary.create_summary(r2.review_string)
             r2.user_review = form.all_reviews
             print(r2.summary_text)
