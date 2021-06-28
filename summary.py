@@ -6,7 +6,6 @@ import pandas as pd
 from scipy.sparse.linalg import svds
 import networkx
 # nltk.download('punkt')
-# nltk.download('stopwords')
 
 def create_summary(review):
     DOCUMENT = str(review)
