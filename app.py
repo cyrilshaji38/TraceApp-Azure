@@ -5,7 +5,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 import amazon
 import summary
-import nltk
 
 subscription_key = "4e6fc5014582468ea54de7d20dae4ad6"
 endpoint = "https://trace-textanalysis.cognitiveservices.azure.com/"
@@ -91,6 +90,5 @@ r2 = Results()
 
 
 if __name__ == '__main__':
-    nltk.download('stopwords')
     app.debug = True
     app.run()
