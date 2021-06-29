@@ -30,7 +30,7 @@ def sentiment_analysis_example(client):
         neg = response.confidence_scores.negative
         if(pos>neg):
             p=p+1
-        else:
+        elif(neg>pos):
             n=n+1
     if(p>n):
         r2.sentimental_analysis = "positive"

@@ -5,8 +5,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import pandas as pd
 from scipy.sparse.linalg import svds
 import networkx
+nltk.download('punkt')
 nltk.download('stopwords')
-# nltk.download('punkt')
 
 def create_summary(review):
     DOCUMENT = str(review)
