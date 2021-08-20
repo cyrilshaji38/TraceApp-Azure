@@ -1,4 +1,4 @@
-# Trace App
+# Amazon Trace
 Welcome to the Trace App! We will help you sort out your product reviews.
 
 ## Do the following to find the overall sentiment of the customer reviews of an Amazon product:
